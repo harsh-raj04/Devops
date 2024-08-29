@@ -6,24 +6,123 @@
     <title>Hello DevOps</title>
     <style>
         body {
-            background-color: #282c34;
-            color: #ffffff;
             font-family: 'Arial', sans-serif;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
+            background: linear-gradient(-45deg, #282c34, #61dafb, #ff6f61, #88b04b);
+            background-size: 400% 400%;
+            animation: gradientBackground 15s ease infinite;
+            color: #ffffff;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
         h1 {
             font-size: 4rem;
+            margin-bottom: 20px;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-            border-bottom: 2px solid #61dafb;
-            padding-bottom: 10px;
+            animation: slideIn 1s ease-out;
+        }
+        p {
+            font-size: 1.5rem;
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+        }
+        button:hover {
+            transform: scale(1.05);
+        }
+        button:active {
+            transform: scale(0.95);
+        }
+        #toggle-mode {
+            background-color: #ffffff;
+            color: #282c34;
+        }
+        #change-bg {
+            background-color: #61dafb;
+            color: #282c34;
+        }
+        @keyframes slideIn {
+            from {
+                transform: translateY(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes gradientBackground {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        .light-mode {
+            background-color: #f0f0f0;
+            color: #282c34;
         }
     </style>
 </head>
 <body>
-    <h1>Hello DevOps</h1>
+    <h1 id="greeting">Hello DevOps</h1>
+    <p>Welcome to the world of DevOps!</p>
+    <button id="change-bg" onclick="changeBackground()">Change Background</button>
+    <button id="toggle-mode" onclick="toggleMode()">Toggle Light/Dark Mode</button>
+
+    <script>
+        // Change Background Function
+        function changeBackground() {
+            const colors = ['#FF6F61', '#6B5B95', '#88B04B', '#F7CAC9', '#92A8D1', '#955251'];
+            const randomColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.style.backgroundColor = randomColor;
+        }
+
+        // Toggle Light/Dark Mode Function
+        function toggleMode() {
+            document.body.classList.toggle('light-mode');
+            const toggleBtn = document.getElementById('toggle-mode');
+            if (document.body.classList.contains('light-mode')) {
+                toggleBtn.textContent = "Switch to Dark Mode";
+            } else {
+                toggleBtn.textContent = "Switch to Light Mode";
+            }
+        }
+
+        // Greeting Based on Time of Day
+        function getGreeting() {
+            const hours = new Date().getHours();
+            let greetingText = "Hello DevOps";
+
+            if (hours < 12) {
+                greetingText = "Good Morning, DevOps!";
+            } else if (hours < 18) {
+                greetingText = "Good Afternoon, DevOps!";
+            } else {
+                greetingText = "Good Evening, DevOps!";
+            }
+
+            document.getElementById('greeting').textContent = greetingText;
+        }
+
+        // Call greeting function on page load
+        getGreeting();
+    </script>
 </body>
 </html>
+
